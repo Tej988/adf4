@@ -49,7 +49,7 @@ jobs:
             Set-AzContext -Subscription "${{ secrets.SPN_SUBSCRIPTION_ID }}"
       
             # Deploy your ARM template (modify the paths as needed)
-            New-AzResourceGroupDeployment -ResourceGroupName ${{ vars.DEFAULT_PROPERTIES_RESOURCEGROUP_VALUE1 }} -TemplateFile "path-to-your-template.json" -TemplateParameterFile "path-to-your-parameters.json"
+            New-AzResourceGroupDeployment -ResourceGroupName ${{ vars.DEFAULT_PROPERTIES_RESOURCEGROUP_VALUE1 }} -TemplateFile "./devadfbytej/ARMTemplateForFactory.json" -TemplateParameterFile "./devadfbytej/ARMTemplateParametersForFactory.json"
       
             # Start the Triggers that were in "Started" state before stopping
             foreach ($triggerName in $startedTriggers) {
