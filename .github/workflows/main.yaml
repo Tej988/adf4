@@ -45,7 +45,7 @@ jobs:
             }
       
             # Connect to Azure using the client secret
-            Connect-AzAccount -ServicePrincipal -ApplicationId "${{ secrets.CLIENT_ID }}" -Credential (New-Object PSCredential "${{ secrets.CLIENT_ID }}", (ConvertTo-SecureString -String "${{ secrets.CLIENT_SECRET }}" -AsPlainText -Force))) -Tenant "${{ secrets.TENANT_ID }}"
+            Connect-AzAccount -ServicePrincipal -ApplicationId "${{ secrets.CLIENT_ID }}" -Credential (New-Object PSCredential "${{ secrets.CLIENT_ID }}", (ConvertTo-SecureString -String "${{ secrets.CLIENT_SECRET }}" -AsPlainText -Force)) -Tenant "${{ secrets.TENANT_ID }}"
             Set-AzContext -Subscription "${{ secrets.SUBSCRIPTION_ID }}"
             # Connect to Azure using the client secret
 
