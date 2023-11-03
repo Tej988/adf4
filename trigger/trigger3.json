@@ -1,0 +1,19 @@
+{
+	"name": "trigger3",
+	"properties": {
+		"annotations": [
+			"ABC"
+		],
+		"runtimeState": "Started",
+		"pipelines": [],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Minute",
+				"interval": 15,
+				"startTime": "2023-11-03T07:16:00",
+				"timeZone": "Greenwich Standard Time"
+			}
+		}
+	}
+}
