@@ -19,6 +19,10 @@ jobs:
       - name: Get latest code
         uses: actions/checkout@v2
 
+      - name: Install Azure PowerShell module
+        run: Install-Module -Name Az -Force -AllowClobber -Scope CurrentUser
+
+
       - name: 'ADF triggers stop --> Deployment and triggers start step'
         uses: azure/powershell@v1
         with:
