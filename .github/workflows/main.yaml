@@ -45,8 +45,8 @@ jobs:
             }
       
             # Connect to Azure using the client secret
-            Connect-AzAccount -ServicePrincipal -ApplicationId "${{ secrets.SPN_CLIENT_ID }}" -Credential (New-Object PSCredential (ApplicationId, (ConvertTo-SecureString -String "${{ secrets.SPN_CLIENT_SECRET }}" -AsPlainText -Force))) -Tenant "${{ secrets.SPN_TENANT_ID }}"
-            Set-AzContext -Subscription "${{ secrets.SPN_SUBSCRIPTION_ID }}"
+            Connect-AzAccount -ServicePrincipal -ApplicationId "${{ secrets.CLIENT_ID }}" -Credential (New-Object PSCredential (ApplicationId, (ConvertTo-SecureString -String "${{ secrets.CLIENT_SECRET }}" -AsPlainText -Force))) -Tenant "${{ secrets.TENANT_ID }}"
+            Set-AzContext -Subscription "${{ secrets.SUBSCRIPTION_ID }}"
       
             # Deploy your ARM template (modify the paths as needed)
             New-AzResourceGroupDeployment -ResourceGroupName ${{ vars.DEFAULT_PROPERTIES_RESOURCEGROUP_VALUE1 }} -TemplateFile "./devadfbytej/ARMTemplateForFactory.json" -TemplateParameterFile "./devadfbytej/ARMTemplateParametersForFactory.json"
