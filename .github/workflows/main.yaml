@@ -12,19 +12,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Azure login
-        uses: azure/login@v1.4.6
+        uses: azure/login@v1
         with:
-          creds: '{"clientId":"${{ secrets.CLIENT_ID }}","clientSecret":"${{ secrets.CLIENT_SECRET }}","subscriptionId":"${{ secrets.SUBSCRIPTION_ID }}","tenantId":"${{ secrets.TENANT_ID }}"}'
+          creds: |
+            {
+              "clientId": "${{ secrets.CLIENT_ID }}",
+              "clientSecret": "${{ secrets.CLIENT_SECRET }}",
+              "subscriptionId": "${{ secrets.SUBSCRIPTION_ID }}",
+              "tenantId": "${{ secrets.TENANT_ID }}"
+            }
       
       - name: Get latest code
         uses: actions/checkout@v2
 
-    - name: Azure PowerShell Script
-    uses: Azure/powershell@v1
-    with:
-        # azPSVersion: '3.4.0'  # Specify the desired Azure PowerShell version
-        scriptPath: ./cicd (1).ps1
-        scriptArguments: -armTemplate "$(System.DefaultWorkingDirectory)/_ADF/devadfbytej/ARMTemplateForFactory.json" -ResourceGroupName "Tej_RG" -DataFactoryName "devadfbytej" -predeployment $true -deleteDeployment $false
-    # env:
-    #     AZURE_SERVICE_PRINCIPAL: ${{ secrets.AZURE_SERVICE_PRINCIPAL }}
-      
+      - name: Azure PowerShell Script
+        uses: Azure/powershell@v1
+        with:
+          scriptPath: ./cicd (1).ps1
+          scriptArguments: -armTemplate "$(System.DefaultWorkingDirectory)/_ADF/devadfbytej/ARMTemplateForFactory.json" -ResourceGroupName "Tej_RG" -DataFactoryName "devadfbytej" -predeployment $true -deleteDeployment $false
