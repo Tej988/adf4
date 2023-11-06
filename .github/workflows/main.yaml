@@ -71,6 +71,7 @@ jobs:
         run: |
             Install-Module -Name Az -Force -Scope CurrentUser -AllowClobber -RequiredVersion $env:PSAzureVersion
             Import-Module Az
+            Import-Module Az.DataFactory
             Connect-AzAccount -UseDeviceAuthentication
             Set-AzContext -SubscriptionId 'cd80669d-c886-455a-b108-8299fac678e3'
         shell: pwsh
