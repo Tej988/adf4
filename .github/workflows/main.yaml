@@ -99,5 +99,5 @@ jobs:
       - name: Run Azure PowerShell start the trigger
         uses: azure/powershell@v1
         with:
-            inlineScript:  .\cicdscript.ps1 -armTemplate "./devadfbytej/ARMTemplateForFactory.json" -ResourceGroupName "Tej_RG" -DataFactoryName "devadfbytej" -predeployment $true -deleteDeployment $true
+            inlineScript:  .\cicdscript.ps1 -armTemplate "./devadfbytej/ARMTemplateForFactory.json" -ResourceGroupName "Tej_RG" -DataFactoryName "prodadfbytej" -predeployment $true -deleteDeployment $true
             azPSVersion: "latest"
