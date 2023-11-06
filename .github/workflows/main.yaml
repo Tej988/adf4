@@ -76,9 +76,6 @@ jobs:
           $azureTenantId= "${{ secrets.TENANT_ID }}"
           $azurePassword = ConvertTo-SecureString "${{ secrets.CLIENT_SECRET }}" -AsPlainText -Force
           $psCred = New-Object System.Management.Automation.PSCredential($azureAplicationId , $azurePassword)
-        #   Add-AzureRmAccount -Credential $psCred -TenantId $azureTenantId  -ServicePrincipal 
-        #   $secureSecret = ConvertTo-SecureString -String $env:PSAzureServicePrincipalSecret -AsPlainText -Force
-        #   $psCredential = New-Object System.Management.Automation.PSCredential ($env:PSAzureApplicationId, $secureSecret)
           Connect-AzAccount -ServicePrincipal -Credential $psCred -Tenant $azureTenantId -ApplicationId $azureAplicationId
         shell: pwsh
         env:
