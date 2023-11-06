@@ -17,14 +17,19 @@ jobs:
               "subscriptionId": "${{ secrets.SUBSCRIPTION_ID }}",
               "tenantId": "${{ secrets.TENANT_ID }}"
             }
-      
+
       - name: Get latest code
         uses: actions/checkout@v2
 
       - name: Azure PowerShell Script
-        uses: Azure/powershell@v1
-        with:
-          azPSVersion: '3.4.0' 
-          inlineScript: |
-          
-            .\cicdscript.ps1 -armTemplate "./devadfbytej/ARMTemplateForFactory.json" -ResourceGroupName "Tej_RG" -DataFactoryName "devadfbytej" -predeployment $true -deleteDeployment $false
+        run: |
+          Install-Module -Name Az -Force -Scope CurrentUser -AllowClobber
+          Import-Module Az
+          Connect-AzAccount -ServicePrincipal -Credential $PSAzureCredential -Tenant $PSAzureTenant -ApplicationId $PSAzureApplicationId
+          .\cicd (1).ps1 -armTemplate "$(System.DefaultWorkingDirectory)/_ADF/devadfbytej/ARMTemplateForFactory.json" -ResourceGroupName "Tej_RG" -DataFactoryName "devadfbytej" -predeployment $true -deleteDeployment $false
+        shell: pwsh
+        env:
+          PSAzureCredential: ${{ secrets.CLIENT_ID }}
+          PSAzureTenant: ${{ secrets.TENANT_ID }}
+          PSAzureApplicationId: ${{ secrets.CLIENT_ID }}
+          PSAzureServicePrincipalSecret: ${{ secrets.CLIENT_SECRET }}
