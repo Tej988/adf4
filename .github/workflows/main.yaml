@@ -81,23 +81,23 @@ jobs:
       - name: Get latest code
         uses: actions/checkout@v2
 
-      - name: Run Azure PowerShell Script File
+      - name: Run Azure PowerShell stop the triggers
         uses: azure/powershell@v1
         with:
             inlineScript:  .\cicdscript.ps1 -armTemplate "./devadfbytej/ARMTemplateForFactory.json" -ResourceGroupName "Tej_RG" -DataFactoryName "devadfbytej" -predeployment $true -deleteDeployment $false
             azPSVersion: "latest"
-    #   - name: Set up Azure PowerShell
-    #     run: |
-    #       Install-Module -Name Az -Force -Scope CurrentUser -AllowClobber -RequiredVersion $env:PSAzureVersion
-    #       Import-Module Az
-    #       $azureAplicationId ="${{ secrets.CLIENT_ID }}"
-    #       $azureTenantId= "${{ secrets.TENANT_ID }}"
-    #       $azurePassword = ConvertTo-SecureString "${{ secrets.CLIENT_SECRET }}" -AsPlainText -Force
-    #       $psCred = New-Object System.Management.Automation.PSCredential($azureAplicationId , $azurePassword)
-    #       Connect-AzAccount -ServicePrincipal -Credential $psCred -Tenant $azureTenantId -ApplicationId $azureAplicationId
-    #     shell: pwsh
-    #     env:
-    #       PSAzureTenant: ${{ secrets.TENANT_ID }}
-    #       PSAzureApplicationId: ${{ secrets.CLIENT_ID }}
-    #       PSAzureServicePrincipalSecret: ${{ secrets.CLIENT_SECRET }}
-    #       PSAzureVersion: "2.6.0"  # Specify the desired version here
+
+      - name: Deploy Azure Resource Manager (ARM) Template
+        uses: Azure/arm-deploy@v1.0.6
+        with:
+          scope: 'resourcegroup'
+          resourceGroupName: "Tej_RG"
+          template: ./devadfbytej/ARMTemplateForFactory.json
+          deploymentMode: Incremental
+          parameters: factoryName=prodadfbytej
+
+      - name: Run Azure PowerShell start the trigger
+        uses: azure/powershell@v1
+        with:
+            inlineScript:  .\cicdscript.ps1 -armTemplate "./devadfbytej/ARMTemplateForFactory.json" -ResourceGroupName "Tej_RG" -DataFactoryName "devadfbytej" -predeployment $true -deleteDeployment $true
+            azPSVersion: "latest"
