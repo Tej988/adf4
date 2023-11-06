@@ -72,9 +72,20 @@ jobs:
             Install-Module -Name Az -Force -Scope CurrentUser -AllowClobber -RequiredVersion $env:PSAzureVersion
             Import-Module Az
             Connect-AzAccount -UseDeviceAuthentication
+            Set-AzContext -SubscriptionId 'cd80669d-c886-455a-b108-8299fac678e3'
         shell: pwsh
         env:
             PSAzureVersion: '2.6.0'
+   
+
+      - name: Get latest code
+        uses: actions/checkout@v2
+
+      - name: Run Azure PowerShell Script File
+        uses: azure/powershell@v1
+        with:
+            inlineScript:  .\cicdscript.ps1 -armTemplate "./devadfbytej/ARMTemplateForFactory.json" -ResourceGroupName "Tej_RG" -DataFactoryName "devadfbytej" -predeployment $true -deleteDeployment $false
+            azPSVersion: "latest"
     #   - name: Set up Azure PowerShell
     #     run: |
     #       Install-Module -Name Az -Force -Scope CurrentUser -AllowClobber -RequiredVersion $env:PSAzureVersion
@@ -90,12 +101,3 @@ jobs:
     #       PSAzureApplicationId: ${{ secrets.CLIENT_ID }}
     #       PSAzureServicePrincipalSecret: ${{ secrets.CLIENT_SECRET }}
     #       PSAzureVersion: "2.6.0"  # Specify the desired version here
-
-      - name: Get latest code
-        uses: actions/checkout@v2
-
-      - name: Run Azure PowerShell Script File
-        uses: azure/powershell@v1
-        with:
-            inlineScript:  .\cicdscript.ps1 -armTemplate "./devadfbytej/ARMTemplateForFactory.json" -ResourceGroupName "Tej_RG" -DataFactoryName "devadfbytej" -predeployment $true -deleteDeployment $false
-            azPSVersion: "latest"
