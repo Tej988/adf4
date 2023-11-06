@@ -80,7 +80,7 @@ jobs:
           PSAzureTenant: ${{ secrets.TENANT_ID }}
           PSAzureApplicationId: ${{ secrets.CLIENT_ID }}
           PSAzureServicePrincipalSecret: ${{ secrets.CLIENT_SECRET }}
-          PSAzureVersion: "latest"  # Specify the desired version here
+          PSAzureVersion: "2.6.0"  # Specify the desired version here
 
       - name: Get latest code
         uses: actions/checkout@v2
