@@ -1,14 +1,12 @@
 {
-	"name": "trigger1",
+	"name": "trigger4",
 	"properties": {
-		"annotations": [
-			"LDS"
-		],
+		"annotations": [],
 		"runtimeState": "Stopped",
 		"pipelines": [
 			{
 				"pipelineReference": {
-					"referenceName": "pipeline1",
+					"referenceName": "pipeline2",
 					"type": "PipelineReference"
 				}
 			}
@@ -16,10 +14,10 @@
 		"type": "ScheduleTrigger",
 		"typeProperties": {
 			"recurrence": {
-				"frequency": "Day",
+				"frequency": "Minute",
 				"interval": 15,
-				"startTime": "2023-11-03T07:14:00",
-				"timeZone": "Greenwich Standard Time"
+				"startTime": "2023-11-04T06:23:00",
+				"timeZone": "India Standard Time"
 			}
 		}
 	}

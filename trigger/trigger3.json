@@ -4,7 +4,7 @@
 		"annotations": [
 			"ABC"
 		],
-		"runtimeState": "Started",
+		"runtimeState": "Stopped",
 		"pipelines": [
 			{
 				"pipelineReference": {

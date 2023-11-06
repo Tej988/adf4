@@ -4,7 +4,7 @@
 		"annotations": [
 			"LDS"
 		],
-		"runtimeState": "Started",
+		"runtimeState": "Stopped",
 		"pipeline": {
 			"pipelineReference": {
 				"referenceName": "pipeline1_copy1",
