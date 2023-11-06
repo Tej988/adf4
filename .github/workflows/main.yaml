@@ -85,7 +85,7 @@ jobs:
       - name: Run Azure PowerShell stop the triggers
         uses: azure/powershell@v1
         with:
-            inlineScript:  ./devadfbytej/cicd.ps1 -armTemplate "./devadfbytej/ARMTemplateForFactory.json" -ResourceGroupName "Tej_RG" -DataFactoryName "devadfbytej" -predeployment $true -deleteDeployment $false
+            inlineScript:  ./cicdscript.ps1 -armTemplate "./devadfbytej/ARMTemplateForFactory.json" -ResourceGroupName "Tej_RG" -DataFactoryName "devadfbytej" -predeployment $true -deleteDeployment $false
             azPSVersion: "latest"
 
       - name: Deploy Azure Resource Manager (ARM) Template
@@ -100,5 +100,5 @@ jobs:
       - name: Run Azure PowerShell start the trigger
         uses: azure/powershell@v1
         with:
-            inlineScript:  ./devadfbytej/cicd.ps1 -armTemplate "./devadfbytej/ARMTemplateForFactory.json" -ResourceGroupName "Tej_RG" -DataFactoryName "prodadfbytej" -predeployment $false -deleteDeployment $true
+            inlineScript:  ./cicdscript.ps1 -armTemplate "./devadfbytej/ARMTemplateForFactory.json" -ResourceGroupName "Tej_RG" -DataFactoryName "prodadfbytej" -predeployment $false -deleteDeployment $true
             azPSVersion: "latest"
