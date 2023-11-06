@@ -67,22 +67,29 @@ jobs:
               "subscriptionId": "${{ secrets.SUBSCRIPTION_ID }}",
               "tenantId": "${{ secrets.TENANT_ID }}"
             }
-
       - name: Set up Azure PowerShell
         run: |
-          Install-Module -Name Az -Force -Scope CurrentUser -AllowClobber -RequiredVersion $env:PSAzureVersion
-          Import-Module Az
-          $azureAplicationId ="${{ secrets.CLIENT_ID }}"
-          $azureTenantId= "${{ secrets.TENANT_ID }}"
-          $azurePassword = ConvertTo-SecureString "${{ secrets.CLIENT_SECRET }}" -AsPlainText -Force
-          $psCred = New-Object System.Management.Automation.PSCredential($azureAplicationId , $azurePassword)
-          Connect-AzAccount -ServicePrincipal -Credential $psCred -Tenant $azureTenantId -ApplicationId $azureAplicationId
+            Install-Module -Name Az -Force -Scope CurrentUser -AllowClobber -RequiredVersion $env:PSAzureVersion
+            Import-Module Az
+            Connect-AzAccount -UseDeviceAuthentication
         shell: pwsh
         env:
-          PSAzureTenant: ${{ secrets.TENANT_ID }}
-          PSAzureApplicationId: ${{ secrets.CLIENT_ID }}
-          PSAzureServicePrincipalSecret: ${{ secrets.CLIENT_SECRET }}
-          PSAzureVersion: "2.6.0"  # Specify the desired version here
+            PSAzureVersion: '2.6.0'
+    #   - name: Set up Azure PowerShell
+    #     run: |
+    #       Install-Module -Name Az -Force -Scope CurrentUser -AllowClobber -RequiredVersion $env:PSAzureVersion
+    #       Import-Module Az
+    #       $azureAplicationId ="${{ secrets.CLIENT_ID }}"
+    #       $azureTenantId= "${{ secrets.TENANT_ID }}"
+    #       $azurePassword = ConvertTo-SecureString "${{ secrets.CLIENT_SECRET }}" -AsPlainText -Force
+    #       $psCred = New-Object System.Management.Automation.PSCredential($azureAplicationId , $azurePassword)
+    #       Connect-AzAccount -ServicePrincipal -Credential $psCred -Tenant $azureTenantId -ApplicationId $azureAplicationId
+    #     shell: pwsh
+    #     env:
+    #       PSAzureTenant: ${{ secrets.TENANT_ID }}
+    #       PSAzureApplicationId: ${{ secrets.CLIENT_ID }}
+    #       PSAzureServicePrincipalSecret: ${{ secrets.CLIENT_SECRET }}
+    #       PSAzureVersion: "2.6.0"  # Specify the desired version here
 
       - name: Get latest code
         uses: actions/checkout@v2
