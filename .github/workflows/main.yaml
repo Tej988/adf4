@@ -1,3 +1,53 @@
+# on:
+#   push:
+#     branches:
+#       - adf_publish
+
+# jobs:
+#   release:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Azure login
+#         uses: azure/login@v1
+#         with:
+#           creds: |
+#             {
+#               "clientId": "${{ secrets.CLIENT_ID }}",
+#               "clientSecret": "${{ secrets.CLIENT_SECRET }}",
+#               "subscriptionId": "${{ secrets.SUBSCRIPTION_ID }}",
+#               "tenantId": "${{ secrets.TENANT_ID }}"
+#             }
+
+    #   - name: Set up Azure PowerShell
+    #     run: |
+    #       Install-Module -Name Az -Force -Scope CurrentUser -AllowClobber -RequiredVersion $env:PSAzureVersion
+    #       Import-Module Az
+    #       $psCredential = Get-Credential -UserName $env:PSAzureApplicationId -Password $env:PSAzureServicePrincipalSecret
+    #       Connect-AzAccount -ServicePrincipal -Credential $psCredential -Tenant $env:PSAzureTenant -ApplicationId $env:PSAzureApplicationId
+    #     shell: pwsh
+    #     env:
+    #       PSAzureTenant: ${{ secrets.TENANT_ID }}
+    #       PSAzureApplicationId: ${{ secrets.CLIENT_ID }}
+    #       PSAzureServicePrincipalSecret: ${{ secrets.CLIENT_SECRET }}
+    #       azPSVersion: "latest"  # Specify the desired version here
+
+    #   - name: Get latest code
+    #     uses: actions/checkout@v2
+
+    #   - name: Azure PowerShell Script
+    #     run: |
+    #       .\cicdscript.ps1 -armTemplate "./devadfbytej/ARMTemplateForFactory.json" -ResourceGroupName "Tej_RG" -DataFactoryName "devadfbytej" -predeployment $true -deleteDeployment $false
+    #     shell: pwsh
+
+
+    #   - name: Run Azure PowerShell Script File
+    #     uses: azure/powershell@v1
+    #     with:
+    #         inlineScript:  .\cicdscript.ps1 -armTemplate "./devadfbytej/ARMTemplateForFactory.json" -ResourceGroupName "Tej_RG" -DataFactoryName "devadfbytej" -predeployment $true -deleteDeployment $false
+    #         azPSVersion: "latest"
+
+
+
 on:
   push:
     branches:
@@ -18,27 +68,22 @@ jobs:
               "tenantId": "${{ secrets.TENANT_ID }}"
             }
 
-    #   - name: Set up Azure PowerShell
-    #     run: |
-    #       Install-Module -Name Az -Force -Scope CurrentUser -AllowClobber -RequiredVersion $env:PSAzureVersion
-    #       Import-Module Az
-    #       $psCredential = Get-Credential -UserName $env:PSAzureApplicationId -Password $env:PSAzureServicePrincipalSecret
-    #       Connect-AzAccount -ServicePrincipal -Credential $psCredential -Tenant $env:PSAzureTenant -ApplicationId $env:PSAzureApplicationId
-    #     shell: pwsh
-    #     env:
-    #       PSAzureTenant: ${{ secrets.TENANT_ID }}
-    #       PSAzureApplicationId: ${{ secrets.CLIENT_ID }}
-    #       PSAzureServicePrincipalSecret: ${{ secrets.CLIENT_SECRET }}
-    #       azPSVersion: "latest"  # Specify the desired version here
+      - name: Set up Azure PowerShell
+        run: |
+          Install-Module -Name Az -Force -Scope CurrentUser -AllowClobber -RequiredVersion $env:PSAzureVersion
+          Import-Module Az
+          $secureSecret = ConvertTo-SecureString -String $env:PSAzureServicePrincipalSecret -AsPlainText -Force
+          $psCredential = New-Object System.Management.Automation.PSCredential ($env:PSAzureApplicationId, $secureSecret)
+          Connect-AzAccount -ServicePrincipal -Credential $psCredential -Tenant $env:PSAzureTenant -ApplicationId $env:PSAzureApplicationId
+        shell: pwsh
+        env:
+          PSAzureTenant: ${{ secrets.TENANT_ID }}
+          PSAzureApplicationId: ${{ secrets.CLIENT_ID }}
+          PSAzureServicePrincipalSecret: ${{ secrets.CLIENT_SECRET }}
+          PSAzureVersion: "latest"  # Specify the desired version here
 
       - name: Get latest code
         uses: actions/checkout@v2
-
-    #   - name: Azure PowerShell Script
-    #     run: |
-    #       .\cicdscript.ps1 -armTemplate "./devadfbytej/ARMTemplateForFactory.json" -ResourceGroupName "Tej_RG" -DataFactoryName "devadfbytej" -predeployment $true -deleteDeployment $false
-    #     shell: pwsh
-
 
       - name: Run Azure PowerShell Script File
         uses: azure/powershell@v1
