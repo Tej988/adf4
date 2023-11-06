@@ -24,5 +24,7 @@ jobs:
       - name: Azure PowerShell Script
         uses: Azure/powershell@v1
         with:
+          azPSVersion: '3.4.0' 
           inlineScript: |
+          
             .\cicd (1).ps1 -armTemplate "$(System.DefaultWorkingDirectory)/_ADF/devadfbytej/ARMTemplateForFactory.json" -ResourceGroupName "Tej_RG" -DataFactoryName "devadfbytej" -predeployment $true -deleteDeployment $false
